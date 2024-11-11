@@ -1,0 +1,16 @@
+
+-- You can delete this file, then commit and push your changes to your repository when you are ready.
+
+-- Config blocks allow you to configure, document, and test your data assets.
+config {
+  type: "declaration",
+  database: "expanded-dryad-440217-q4",
+  schema: "Source_Religion",
+  name: "source___usreligioncensuswebsite___Congregations2010",
+  description : "This table contains census infortmation about religous congregation in the year 2010"
+  }
+
+
+-- The rest of a SQLX file contains your SELECT statement used to create the table.
+
+--SELECT  as test

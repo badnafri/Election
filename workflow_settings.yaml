@@ -1,5 +1,5 @@
 defaultProject: expanded-dryad-440217-q4
-defaultLocation: US
+defaultLocation: us-east1
 defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0

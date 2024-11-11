@@ -1,0 +1,24 @@
+config {
+   type: "view",
+    name: "stg_Congregation2010"
+}
+
+with simplifiedtable as
+(
+select 
+STNAME as State_Name,
+STABBR as State_Abbreviation,
+TOTCNG as Total_Congregations,
+TOTADH as Total_Adherents,
+EVANCNG as Evangelical_Congregations,
+EVANADH as Evangelical_Adherents,
+BPRTCNG as Black_Protestants_Congregations,
+BPRTADH as Black_Protestant_Adherents,
+MPRTCNG  as Mainline_Protestants_Congregations,
+MPRTADH as Mainline_Protestants_Adherents,
+CATHCNG as Catholics_Congregations,
+CATHADH as Catholic_Adherents
+FROM ${ref("source___usreligioncensuswebsite___Congregations2010")}
+)
+
+ select * from simplifiedtable
