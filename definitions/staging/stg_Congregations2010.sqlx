@@ -1,24 +1,59 @@
 config {
-   type: "view",
+    type: "view",
     name: "stg_Congregation2010"
 }
 
-with simplifiedtable as
-(
-select 
-STNAME as State_Name,
-STABBR as State_Abbreviation,
-TOTCNG as Total_Congregations,
-TOTADH as Total_Adherents,
-EVANCNG as Evangelical_Congregations,
-EVANADH as Evangelical_Adherents,
-BPRTCNG as Black_Protestants_Congregations,
-BPRTADH as Black_Protestant_Adherents,
-MPRTCNG  as Mainline_Protestants_Congregations,
-MPRTADH as Mainline_Protestants_Adherents,
-CATHCNG as Catholics_Congregations,
-CATHADH as Catholic_Adherents
-FROM ${ref("source___usreligioncensuswebsite___Congregations2010")}
-)
-
- select * from simplifiedtable
+  -- add and delete churches to this as they become relevant. There are many more
+  -- fields available.
+WITH
+  simplifiedtable AS (
+  SELECT
+    STNAME AS State_Name,
+    STABBR AS State_Abbreviation,
+    TOTCNG AS Total_Congregations,
+    TOTADH AS Total_Adherents,
+    EVANCNG AS Evangelical_Congregations,
+    EVANADH AS Evangelical_Adherents,
+    BPRTCNG AS Black_Protestants_Congregations,
+    BPRTADH AS Black_Protestant_Adherents,
+    MPRTCNG AS Mainline_Protestants_Congregations,
+    MPRTADH AS Mainline_Protestants_Adherents,
+    CATHCNG AS Catholics_Congregations,
+    CATHADH AS Catholic_Adherents,
+    ORTHCNG AS Orthodox_Congregations,
+    ORTHADH AS Orthodox_Adherents,
+    OCGCNG AS Church_of_God_Congregations,
+    ALBPCNG AS Alliance_of_Baptists_Congregations,
+    AALCCNG AS American_Assosciation_of_Lutheran_Churches_Congregations,
+    ABACNG AS American_Baptist_Assosciation_Congregations,
+    ABAADH AS American_Baptist_Assosciation_Adherents,
+    -- what is the difference between these two
+    ABCCNG AS American_Baptist_Churches_Congregations,
+    ABCADH AS American_Baptist_Churches_Adherents,
+    APCCNG AS American_Presbytrian_Church_Congregations,
+    AMSHCNG AS Amish_Congregations,
+    AMSHADH AS Amish_Adherents,
+    ACNACNG AS Anglican_Church_Congregations,
+    AFLCCNG AS Assosciation_Free_Lutheran_Congregations,
+    ARBCCNG AS Assosciation_Refromed_Baptist_Churches_Congregations,
+    BUDMCNG AS Mahayana_Buddhism_Congregations,
+    BUDMADH AS Buddhism_Mahayana_Adherents,
+    BUDTCNG AS Buddhism_Theravada_Congregations,
+    BUDTADH AS Buddhism_Therevada_Adherents,
+    BUDVCNG AS Buddhism_Vajrayana_Congregations,
+    BUDVADH AS Buddhism_Vajrayana_Adherents,
+    CTHCNG AS Catholic_Church_Congregations,
+    CTHADH AS Catholic_Church_Adherents,
+    LDSCNG AS Latter_Day_Saints_Congregations,
+    LDSADH AS Latter_Day_Saints_Adherents,
+    NAZCNG AS Church_of_Nazarene_Congregations,
+    NAZADH AS Church_of_Nazarene_Adherents,
+    JWCNG AS Jehovahs_Witness_Congregations,
+    MENNCNG AS Mennonite_Church_Congregations,
+    MENNADH AS Mennonite_Church_Adherents
+  FROM
+    ${ref("source___usreligioncensuswebsite___Congregations2010")} )
+SELECT
+  *
+FROM
+  simplifiedtable

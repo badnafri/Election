@@ -1,0 +1,83 @@
+config {
+   type: "table",
+    name: "fact_Congregations2"
+}
+
+-- what does null mean here.
+with fact_Congregations as
+( select
+State_Name,
+State_Abbreviation,
+sum(Total_Congregations)                                as Total_Congregations,
+sum(Total_Adherents)                                    as Total_Adherents,
+sum(Evangelical_Congregations)                          as Evangelical_Congregations,
+sum(Evangelical_Adherents)                              as Evangelical_Adherents,
+sum(Black_Protestant_Adherents)                         as Black_Protestant_Adherents,
+sum(Black_Protestants_Congregations)                    as Black_Protestant_Congregations,
+sum(Mainline_Protestants_Congregations)                 as Mainline_Protestants_Congregations,
+sum(Mainline_Protestants_Adherents)                     as Mainline_Protestants_Adherents,
+sum(Catholics_Congregations)                            as Catholics_Congregations,
+sum(Catholic_Adherents)                                 as Catholic_Adherents,
+sum(Orthodox_Congregations)                             as Orthodox_Congregations,
+sum(Orthodox_Adherents)                                 as Orthodox_Adherents,
+sum(Church_of_God_Congregations)                        as Church_of_God_Congregations,
+sum(Alliance_of_Baptists_Congregations)                     as Alliance_of_Baptists_Congregations,
+sum(American_Assosciation_of_Lutheran_Churches_Congregations) as American_Assosciation_of_Lutheran_Churches_Congregations,
+sum(American_Baptist_Assosciation_Congregations)            as American_Baptist_Assosciation_Congregations,
+sum(American_Baptist_Assosciation_Adherents)                as American_Baptist_Assosciation_Adherents,
+sum(American_Baptist_Churches_Congregations)                as American_Baptist_Churhes_Congregations,
+sum(American_Baptist_Churches_Adherents)                    as American_Baptist_Churches_Adherents,
+sum(American_Presbytrian_Church_Congregations)              as American_Presbytrian_Church_Congregations,
+sum(Amish_Congregations)                                    as Amish_Congregations,
+sum(Amish_Adherents)                                        as Amish_Adherents,
+sum(Anglican_Church_Congregations)                          as Anglican_Church_Congregations,
+sum(Assosciation_Free_Lutheran_Congregations)               as Assosciation_Free_Lutheran_Congregations,
+sum(Assosciation_Refromed_Baptist_Churches_Congregations)    as Assosciation_Refromed_Baptist_Churches_Congregation,
+sum(Mahayana_Buddhism_Congregations)                        as Mahayana_Buddhism_Congregations,
+sum(Buddhism_Mahayana_Adherents)                            as Buddhism_Mahayana_Adherents,
+sum(Buddhism_Theravada_Congregations)                       as Buddhism_Theravada_Congregations,
+sum(Buddhism_Therevada_Adherents)                           as Buddhism_Therevada_Adherents,
+sum(Buddhism_Vajrayana_Congregations)                       as Buddhism_Vajrayana_Congregations,
+sum(Buddhism_Vajrayana_Adherents)                           as Buddhism_Vajrayana_Adherents,
+sum(Catholic_Church_Congregations)                          as Catholic_Church_Congregations,
+sum(Catholic_Church_Adherents)                              as Catholic_Church_Adherents,
+sum(Latter_Day_Saints_Congregations)                        as Latter_Day_Saints_Congregations,
+sum(Latter_Day_Saints_Adherents)                             as Latter_Day_Saints_Adherents,
+sum(Church_of_Nazarene_Congregations)                       as Church_of_Nazarene_Adherents,
+sum(Jehovahs_Witness_Congregations)                          as Jehovahs_Witness_Congregations,
+sum(Mennonite_Church_Congregations)                         as Mennonite_Church_Congregations,
+sum(Mennonite_Church_Adherents)                             as Mennonite_Church_Adherents
+
+FROM ${ref("stg_Congregation2010")}
+Group by 1,2
+),
+
+test_table AS 
+ (select
+State_Name,
+Evangelical_Congregations,
+Black_Protestant_Congregations
+FROM fact_Congregations)
+
+
+
+--select * from test_table,
+
+select
+State_Name,
+Congregation_Numbers,
+Congregation_Name
+FROM
+(select 
+*
+ from test_table) as s
+
+unpivot ( 
+    Congregation_Numbers  
+for Congregation_Name 
+IN (
+Evangelical_Congregations,Black_Protestant_Congregations )
+)
+
+
+
